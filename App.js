@@ -18,8 +18,14 @@ import ReviewScreen from './screens/ReviewScreen';
 export default class App extends React.Component {
   render() {
     const MainNavigator = createBottomTabNavigator({
-      welcome: WelcomeScreen,
-      auth: AuthScreen,
+      welcome: {
+        screen: WelcomeScreen,
+        navigationOptions: { tabBarVisible: false }
+      },
+      auth: {
+        screen: AuthScreen,
+        navigationOptions: { tabBarVisible: false }
+      },
       main: {
         screen: createBottomTabNavigator({
           map: MapScreen,
@@ -30,8 +36,11 @@ export default class App extends React.Component {
               settings: SettingsScreen
             })
           }
-        })
+        }),
+        navigationOptions: { tabBarVisible: false }
       }
+    }, {
+      lazy: true
     });
 
     const MainAppNavigator = createAppContainer(MainNavigator);
