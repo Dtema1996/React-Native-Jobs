@@ -6,6 +6,7 @@ import {
   createStackNavigator
 } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { Icon } from 'react-native-elements';
 
 import store from './store';
 import AuthScreen from './screens/AuthScreen';
@@ -18,29 +19,34 @@ import ReviewScreen from './screens/ReviewScreen';
 export default class App extends React.Component {
   render() {
     const MainNavigator = createBottomTabNavigator({
-      welcome: {
-        screen: WelcomeScreen,
-        navigationOptions: { tabBarVisible: false }
-      },
-      auth: {
-        screen: AuthScreen,
-        navigationOptions: { tabBarVisible: false }
-      },
+      welcome: { screen: WelcomeScreen },
+      auth: { screen: AuthScreen },
       main: {
         screen: createBottomTabNavigator({
-          map: MapScreen,
-          deck: DeckScreen,
+          map: { screen: MapScreen },
+          deck: { screen: DeckScreen },
           review: {
-            screen:createStackNavigator({
-              review: ReviewScreen,
-              settings: SettingsScreen
+            navigationOptions: {
+              title: 'Review Jobs',
+              tabBarIcon: ({tintColor}) => {
+                return (<Icon name="favorite" size={30} color={tintColor} />);
+                }
+            },
+            screen: createStackNavigator({
+              review: { screen: ReviewScreen },
+              settings: { screen: SettingsScreen }
             })
           }
-        }),
-        navigationOptions: { tabBarVisible: false }
+        }, {
+          tabBarOptions: {
+            labelStyle: {fontSize: 12}
+          }
+        })
       }
     }, {
-      lazy: true
+      defaultNavigationOptions: {
+        tabBarVisible: false
+      }
     });
 
     const MainAppNavigator = createAppContainer(MainNavigator);

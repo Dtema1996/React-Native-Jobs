@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Icon } from 'react-native-elements';
 import Swipe from '../components/Swipe';
 import * as actions from '../actions';
 
 class DeckScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Jobs',
+    tabBarIcon: ({ tintColor }) => {
+      return <Icon name='description' size={30} color={tintColor} />
+    }
+  })
+
   renderCard(job) {
     const initialRegion = {
       longitude: -122,
@@ -21,7 +28,7 @@ class DeckScreen extends Component {
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === 'android' ? true : false}
+            cacheEnabled={Platform.OS === 'android'}
             initialRegion={initialRegion}
           >
 
@@ -39,11 +46,18 @@ class DeckScreen extends Component {
     console.log(latitude, longitude);
   }
 
-  renderNoMoreCards() {
+  renderNoMoreCards = () => {
     return (
       <Card
         title="No More Jobs!"
-      />
+      >
+        <Button
+          title="Back To Map"
+          icon={{ name: 'my-location' }}
+          buttonStyle={{ backgroundColor: "#03A9F4"}}
+          onPress={() => this.props.navigation.navigate('map')}
+        />
+      </Card>
     );
   }
 

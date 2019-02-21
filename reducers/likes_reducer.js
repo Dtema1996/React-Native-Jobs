@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import {
-  LIKE_JOB
-} from '../actions/type';
+  LIKE_JOB,
+  CLEAR_LIKED_JOBS
+} from '../actions/types';
 
 export default function(state = [], action)  {
   switch(action.type) {
@@ -9,6 +10,8 @@ export default function(state = [], action)  {
       return _.uniqBy([
         action.payload, ...state
       ], 'id');
+    case CLEAR_LIKED_JOBS:
+      return [];
     default:
       return state;
   }
