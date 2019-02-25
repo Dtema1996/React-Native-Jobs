@@ -43,7 +43,6 @@ class DeckScreen extends Component {
         </Text>
       </Card>
     );
-    console.log(latitude, longitude);
   }
 
   renderNoMoreCards = () => {
